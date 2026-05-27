@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Forca</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a2e;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #e94560;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .game {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    svg {
+      width: 200px;
+      height: 220px;
+    }
+
+    svg line, svg circle {
+      stroke: #e94560;
+      stroke-width: 5;
+      stroke-linecap: round;
+      transition: opacity 0.3s;
+    }
+
+    svg .hidden { opacity: 0; }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .palavra {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .letra-slot {
+      width: 36px;
+      height: 44px;
+      border-bottom: 3px solid #e94560;
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 44px;
+    }
+
+    .teclado {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: 340px;
+      justify-content: center;
+    }
+
+    .tecla {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 6px;
+      background: #16213e;
+      color: #eee;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .tecla:hover:not(:disabled) {
+      background: #e94560;
+      transform: scale(1.1);
+    }
+
+    .tecla:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .tecla.errada  { background: #4a1a1a; }
+    .tecla.correta { background: #1a4a2a; }
+
+    .erros {
+      font-size: 0.9rem;
+      color: #aaa;
+      letter-spacing: 1px;
+    }
+
+    .erros span { color: #e94560; font-weight: bold; font-size: 1.1rem; }
+
+    .status {
+      font-size: 1.3rem;
+      font-weight: bold;
+      min-height: 28px;
+      text-align: center;
+    }
+
+    .status.ganhou { color: #4caf50; }
+    .status.perdeu { color: #e94560; }
+
+    .btn-novo {
+      padding: 10px 28px;
+      background: #e94560;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-novo:hover { background: #c73652; transform: scale(1.05); }
+  </style>
+</head>
+<body>
+
+<h1>Jogo da Forca</h1>
+
+<div class="game">
+
+  <svg viewBox="0 0 200 220">
+    <line x1="20" y1="210" x2="180" y2="210"/>
+    <line x1="60" y1="210" x2="60" y2="10"/>
+    <line x1="60" y1="10"  x2="130" y2="10"/>
+    <line x1="130" y1="10" x2="130" y2="40"/>
+    <circle id="cabeca" cx="130" cy="55"  r="15"  fill="none" class="hidden"/>
+    <line   id="corpo"  x1="130" y1="70"  x2="130" y2="130" class="hidden"/>
+    <line   id="bDir"   x1="130" y1="85"  x2="155" y2="110" class="hidden"/>
+    <line   id="bEsq"   x1="130" y1="85"  x2="105" y2="110" class="hidden"/>
+    <line   id="pDir"   x1="130" y1="130" x2="155" y2="160" class="hidden"/>
+    <line   id="pEsq"   x1="130" y1="130" x2="105" y2="160" class="hidden"/>
+  </svg>
+
+  <div class="panel">
+    <div class="palavra" id="palavra"></div>
+    <div class="erros">Erros: <span id="contErros">0</span> / 6</div>
+    <div class="teclado" id="teclado"></div>
+    <div class="status" id="status"></div>
+    <button class="btn-novo" onclick="novoJogo()">Nova Palavra</button>
+  </div>
+
+</div>
+
+<script src="jogo.js"></script>
+</body>
+</html>
